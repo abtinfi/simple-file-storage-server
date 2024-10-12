@@ -8,22 +8,22 @@ UPLOAD_DIRECTORY = "./files"
 
 os.makedirs(UPLOAD_DIRECTORY, exist_ok=True)
 
-
 @app.post("/files/{name}")
 async def upload_file(name: str, file: UploadFile = File(...)):
-    # TODO: Check if a file with the same name already exists and handle duplicates appropriately.
-    # TODO: Add error handling for unsupported file types or sizes (e.g., limit file size to prevent excessive storage use).
-    pass
+    file_path = os.path.join(UPLOAD_DIRECTORY, name)
+    with open(file_path, "wb") as buffer:
+        buffer.write(await file.read())
+    return {"message": f"File '{name}' uploaded successfully"}
 
 @app.delete("/files/{name}")
 async def delete_file(name: str):
-    # TODO: Implement a soft-delete mechanism to allow file recovery.
-    # TODO: Log deletion actions for audit purposes or add permission checks for file deletion.
-    pass
-
+    file_path = os.path.join(UPLOAD_DIRECTORY, name)
+    if not os.path.isfile(file_path):
+        raise HTTPException(status_code=404, detail=f"File '{name}' not found")
+    os.remove(file_path)
+    return {"message": f"File '{name}' deleted successfully"}
 
 @app.get("/files", response_model=List[str])
 async def list_files():
-    # TODO: Sort files by name, date, or other attributes for improved organization.
-    # TODO: Implement pagination if the number of files grows large to handle listing performance.
-    pass
+    files = [f for f in os.listdir(UPLOAD_DIRECTORY) if os.path.isfile(os.path.join(UPLOAD_DIRECTORY, f))]
+    return files
