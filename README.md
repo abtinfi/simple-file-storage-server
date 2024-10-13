@@ -110,4 +110,4 @@ The CLI provides an easy way to interact with the server. You can use it to uplo
 
 
 ## Live Demo
-Access the live server [here](https://simple-file-storage-server.onrender.com).
+Access the live server (https://simple-file-storage-server.onrender.com/).
