@@ -107,3 +107,7 @@ The CLI provides an easy way to interact with the server. You can use it to uplo
 - **Upload a file:** `POST /files/{name}`
 - **Delete a file:** `DELETE /files/{name}`
 - **List all files:** `GET /files`
+
+
+## Live Demo
+Access the live server [here](https://simple-file-storage-server.onrender.com).
